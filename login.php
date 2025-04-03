@@ -3,17 +3,16 @@ session_start();
 include('conexao.php');
 if (isset($_SESSION['usuario'])) {
     header("Location: inicio.php");
-    exit(); // Redireciona se já estiver logado
+    exit(); 
 }
 
-$error_message = ""; // Inicializa a variável de erro
+$error_message = ""; 
 
-// Verificar se o formulário foi enviado
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = mysqli_real_escape_string($link, $_POST['username']);
     $senha_digitada = $_POST['password'];
 
-    // Consultar o banco para pegar a senha armazenada
     $query = "SELECT senha FROM usuarios WHERE user = '$username'";
     $result = mysqli_query($link, $query);
 
@@ -21,12 +20,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = mysqli_fetch_assoc($result);
         $senha_armazenada = $row['senha'];
 
-        // Comparar a senha digitada com a senha armazenada
+      
         if ($senha_digitada === $senha_armazenada) {
-            // Iniciar a sessão e redirecionar para a página inicial
-            $_SESSION['usuario'] = $username; // Armazena o nome de usuário na sessão
+           
+            $_SESSION['usuario'] = $username; 
             header("Location: inicio.php");
-            exit(); // Interrompe o código após o redirecionamento
+            exit(); 
         } else {
             $error_message = "Usuário ou senha incorretos!";
         }
@@ -35,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-mysqli_close($link); // Fecha a conexão
+mysqli_close($link); 
 ?>
 
 <!DOCTYPE html>
